@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的展示页</title>
+    <title>本地文件展示页</title>
     <style>
         * {
             margin: 0;
@@ -35,6 +35,8 @@
             margin: 20px 0;
             line-height: 1.7;
             white-space: pre-wrap;
+            color: #555;
+            border: 1px solid #eee;
         }
         .image-box {
             text-align: center;
@@ -45,8 +47,10 @@
             height: auto;
             border-radius: 8px;
         }
-        .file-box {
+        /* 修改这里的布局，让两个按钮并排 */
+        .button-group {
             text-align: center;
+            margin-top: 20px;
         }
         .download-btn {
             display: inline-block;
@@ -55,6 +59,19 @@
             color: white;
             text-decoration: none;
             border-radius: 6px;
+            font-size: 16px;
+            transition: background 0.3s;
+            margin: 0 10px; /* 增加按钮间距 */
+        }
+        .download-btn:hover {
+            background: #3367d6;
+        }
+        /* 给第二个按钮换个颜色区分 */
+        .btn-renxiaoliao {
+            background: #00b894;
+        }
+        .btn-renxiaoliao:hover {
+            background: #00a885;
         }
     </style>
 </head>
@@ -62,26 +79,37 @@
     <div class="container">
         <h1>图片与文件说明展示</h1>
         
-        <!-- 这里自动显示 文件.txt 里的内容 -->
+        <!-- 自动读取 文件.txt 里的内容 -->
         <div class="txt-desc" id="textArea">加载说明文字中...</div>
 
-        <!-- 图片 -->
+        <!-- 展示图片 -->
         <div class="image-box">
             <img src="图片.jpg" alt="展示图片">
         </div>
 
-        <!-- 文件下载 -->
-        <div class="file-box">
-            <a href="文件.pdf" class="download-btn" download>点击下载文件</a>
+        <!-- 按钮区域 -->
+        <div class="button-group">
+            <!-- 第一个按钮：进入98官网 -->
+            <a href="https://474129.cc" class="download-btn" target="_blank">点击进入98官网</a>
+            
+            <!-- 第二个按钮：任小聊下载 -->
+            <a href="https://qq137.com" class="download-btn btn-renxiaoliao" target="_blank">任小聊下载</a>
         </div>
     </div>
 
     <script>
-        // 读取 文件.txt
+        // 读取同目录下的 文件.txt
         fetch('文件.txt')
-            .then(res => res.text())
+            .then(res => {
+                if (!res.ok) throw new Error('文件未找到');
+                return res.text();
+            })
             .then(text => {
                 document.getElementById('textArea').textContent = text;
             })
+            .catch(err => {
+                document.getElementById('textArea').textContent = "⚠️ 未找到 文件.txt，请检查文件是否在仓库根目录";
+            });
     </script>
 </body>
+</html>
