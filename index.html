@@ -47,7 +47,6 @@
             height: auto;
             border-radius: 8px;
         }
-        /* 修改这里的布局，让两个按钮并排 */
         .button-group {
             text-align: center;
             margin-top: 20px;
@@ -61,12 +60,11 @@
             border-radius: 6px;
             font-size: 16px;
             transition: background 0.3s;
-            margin: 0 10px; /* 增加按钮间距 */
+            margin: 0 10px;
         }
         .download-btn:hover {
             background: #3367d6;
         }
-        /* 给第二个按钮换个颜色区分 */
         .btn-renxiaoliao {
             background: #00b894;
         }
@@ -79,36 +77,28 @@
     <div class="container">
         <h1>图片与文件说明展示</h1>
         
-        <!-- 自动读取 文件.txt 里的内容 -->
         <div class="txt-desc" id="textArea">加载说明文字中...</div>
 
-        <!-- 展示图片 -->
         <div class="image-box">
             <img src="图片.jpg" alt="展示图片">
         </div>
 
-        <!-- 按钮区域 -->
         <div class="button-group">
-            <!-- 第一个按钮：进入98官网 -->
-            <a href="https://91347.cc" class="download-btn" target="_blank">点击进入98官网</a>
+            <!-- 修复后：能打开 -->
+            <a href="http://91347.cc" class="download-btn" target="_blank">点击进入98官网</a>
             
-            <!-- 第二个按钮：任小聊下载 -->
             <a href="https://qq138.cc" class="download-btn btn-renxiaoliao" target="_blank">任小聊下载</a>
         </div>
     </div>
 
     <script>
-        // 读取同目录下的 文件.txt
         fetch('文件.txt')
-            .then(res => {
-                if (!res.ok) throw new Error('文件未找到');
-                return res.text();
-            })
+            .then(res => res.text())
             .then(text => {
                 document.getElementById('textArea').textContent = text;
             })
             .catch(err => {
-                document.getElementById('textArea').textContent = "⚠️ 未找到 文件.txt，请检查文件是否在仓库根目录";
+                document.getElementById('textArea').textContent = "⚠️ 未找到 文件.txt";
             });
     </script>
 </body>
